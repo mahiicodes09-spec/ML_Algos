@@ -87,17 +87,17 @@ For this categorical dataset, CategoricalNB from Scikit-learn is used.
 
 8. Advantages:
 
-1. Simple and easy to understand.
-2. Fast to train and predict.
-3. Works well with small datasets.
-4. Useful for classification problems.
-5. Commonly used in spam detection, sentiment analysis and text classification.
+a. Simple and easy to understand.
+b. Fast to train and predict.
+c. Works well with small datasets.
+d. Useful for classification problems.
+e. Commonly used in spam detection, sentiment analysis and text classification.
 
 9. Disadvantages
 
-1. Assumes that features are independent of each other.
-2. This assumption may not always be true in real-world datasets.
-3. Performance depends on the quality and type of data.
+a. Assumes that features are independent of each other.
+b. This assumption may not always be true in real-world datasets.
+c. Performance depends on the quality and type of data.
 
 10. Conclusion
 
