@@ -1,81 +1,182 @@
-# Decision Tree Regressor
+Decision Tree Regression
 
-## 1. What is Decision Tree Regression?
+1. What is Decision Tree Regression?
 
--   A Decision Tree Regressor predicts a numerical value.
--   Example: predicting house prices, marks, or salary.
--   It splits data into smaller groups by asking questions about
-    features.
+Decision Tree Regression is a supervised machine learning algorithm used to predict continuous numerical values, such as salary, house prices, and temperature.
 
-## 2. How Does It Work?
+It splits data into smaller groups using conditions and predicts a value at each leaf node.
 
--   **Root node:** the first question or split.
--   **Branches:** the possible outcomes of a question.
--   **Leaf node:** the final prediction.
--   The model follows questions from the root to a leaf to make a
-    prediction.
--   For squared-error-based regression, a leaf usually predicts the
-    **mean** of the target values in that leaf.
+2. How Does It Work?
 
-## 3. How Is the Best Split Chosen?
+1. Select an input feature.
+2. Sort its values and identify possible split points.
+3. Calculate the variance reduction for each split.
+4. Choose the split with the highest variance reduction.
+5. Repeat the process until a stopping condition is reached.
+6. Predict the mean target value of the final leaf node.
 
--   The model checks possible splits and measures the error in the
-    resulting groups.
--   It chooses a split that reduces the error the most.
--   A common criterion is **Mean Squared Error (MSE)**.
+3. Variance and Mean Squared Error (MSE)
 
-## 4. Mean Squared Error (MSE)
+Variance measures how much the target values differ from their mean.
 
--   MSE is the average of the squared differences between actual and
-    predicted values.
--   Formula: MSE = average of (actual value − predicted value)².
--   Lower MSE means predictions are closer to actual values.
+$$
+V(R)=\frac{1}{n}\sum_{i=1}^{n}(y_i-\bar{y})^2
+$$
 
-## 5. Weighted MSE
+Where:
 
--   After a split, the model combines the errors of both child groups.
--   Each group's MSE is weighted by the number of samples it contains.
--   The preferred split generally has the lowest weighted MSE.
+- (n) = number of observations
+- (y_i) = actual target value
+- (\bar{y}) = mean of target values
 
-## 6. Training and Prediction
+Mean Squared Error (MSE) measures the average squared difference between actual and predicted values.
 
--   Separate the dataset into **X (features)** and **y (target)**.
--   Split the data into training and testing sets.
--   Train the model using the training data.
--   Predict target values for the test data and compare them with actual
-    values.
+$$
+MSE=\frac{1}{n}\sum_{i=1}^{n}(y_i-\hat{y}_i)^2
+$$
 
-## 7. Evaluation Metrics
+Where:
 
--   **MAE:** average absolute prediction error.
--   **MSE:** average squared prediction error; larger errors are
-    penalised more.
--   **R² score:** shows how well the model explains variation in the
-    target; closer to 1 is generally better.
+- (y_i) = actual value
+- (\hat{y}_i) = predicted value
 
-## 8. Overfitting and Underfitting
+At a leaf node, the prediction is usually the mean of the target values in that leaf.
 
--   **Overfitting:** the tree learns the training data too closely and
-    performs poorly on unseen data.
--   **Underfitting:** the tree is too simple to learn the patterns
-    properly.
--   Compare training and testing performance to help identify these
-    issues.
+$$
+\hat{y}{leaf}=\frac{1}{n{leaf}}\sum_{i=1}^{n_{leaf}}y_i
+$$
 
-## 9. Controlling Tree Complexity
+4. Variance Reduction
 
--   **max_depth:** limits how deep the tree can grow.
--   **min_samples_split:** sets the minimum samples needed to split a
-    node.
--   **min_samples_leaf:** sets the minimum samples allowed in a leaf.
--   **Pre-pruning:** limits the tree while it is growing.
--   **Post-pruning:** grows the tree first, then removes unnecessary
-    branches.
--   Too much pruning can cause underfitting.
+Variance reduction measures how much the weighted variance decreases after splitting a parent node into child nodes.
 
-## 10. Key Takeaway
+$$
+VR=V(R)-\sum_{i=1}^{k}w_iV(C_i)
+$$
 
-A Decision Tree Regressor predicts numbers by splitting data into
-groups. It selects useful splits by reducing prediction error, often
-using MSE. Limiting the tree's complexity helps it perform better on new
-data.
+Where:
+
+- (V(R)) = variance of the parent node
+- (V(C_i)) = variance of child node (i)
+- (k) = number of child nodes
+- (w_i) = proportion of observations in child node (i)
+
+The weight of each child is calculated as:
+
+$$
+w_i=\frac{n_i}{n}
+$$
+
+Where:
+
+- (n_i) = number of observations in child node (i)
+- (n) = total observations in the parent node
+
+For a binary split:
+
+$$
+VR=V(R)-[w_LV(C_L)+w_RV(C_R)]
+$$
+
+The split with the highest variance reduction is preferred, because it produces child nodes with lower weighted variance.
+
+5. Overfitting
+
+Overfitting occurs when a decision tree becomes too complex and learns noise from the training data.
+
+An overfitted model performs well on training data but poorly on unseen data.
+
+6. Hyperparameters
+
+Hyperparameters control the growth and complexity of a decision tree.
+
+- "max_depth": Maximum depth of the tree.
+- "min_samples_split": Minimum number of samples required to split a node.
+- "min_samples_leaf": Minimum number of samples required in a leaf.
+- "max_leaf_nodes": Maximum number of leaf nodes.
+- "criterion": Function used to measure split quality, such as "squared_error".
+
+7. Pruning
+
+Pruning helps reduce tree complexity by limiting growth or removing unnecessary branches.
+
+- Pre-pruning: Stops the tree from growing too much using hyperparameters.
+- Post-pruning: Grows the tree first and then removes unnecessary branches.
+
+Pruning helps reduce overfitting and improve generalization.
+
+8. Hyperparameter Tuning
+
+"GridSearchCV" tests different hyperparameter combinations using cross-validation to find a suitable configuration.
+
+Cross-validation divides the training data into multiple folds. The model is trained and evaluated on different combinations of these folds.
+
+It helps select hyperparameters that generalize better to unseen data.
+
+9. Model Evaluation Metrics
+
+Regression models can be evaluated using the following metrics.
+
+Mean Absolute Error (MAE)
+
+Measures the average absolute difference between actual and predicted values.
+
+$$
+MAE=\frac{1}{n}\sum_{i=1}^{n}|y_i-\hat{y}_i|
+$$
+
+Mean Squared Error (MSE)
+
+Measures the average squared prediction error.
+
+$$
+MSE=\frac{1}{n}\sum_{i=1}^{n}(y_i-\hat{y}_i)^2
+$$
+
+Root Mean Squared Error (RMSE)
+
+Measures prediction error in the same unit as the target variable.
+
+$$
+RMSE=\sqrt{\frac{1}{n}\sum_{i=1}^{n}(y_i-\hat{y}_i)^2}
+$$
+
+R-squared ((R^2))
+
+Measures how well the model explains variation in the target variable.
+
+$$
+R^2=1-\frac{\sum_{i=1}^{n}(y_i-\hat{y}i)^2}{\sum{i=1}^{n}(y_i-\bar{y})^2}
+$$
+
+Where:
+
+- (y_i) = actual value
+- (\hat{y}_i) = predicted value
+- (\bar{y}) = mean of actual target values
+- (n) = number of observations
+
+Interpretation:
+
+- Lower MAE, MSE, and RMSE generally indicate better predictions.
+- An (R^2) closer to 1 generally indicates a better fit.
+- A negative (R^2) means the model performs worse than predicting the target mean on the evaluated dataset.
+
+10. Advantages and Limitations
+
+Advantages
+
+- Easy to understand and visualize.
+- Can capture non-linear relationships.
+- Requires little data preprocessing.
+- Does not require feature scaling.
+
+Limitations
+
+- Can overfit easily.
+- Small data changes can produce a different tree.
+- A single decision tree may perform worse than ensemble methods on complex datasets.
+
+Key Takeaway
+
+Decision Tree Regression predicts continuous numerical values by splitting data into smaller groups. It selects useful splits based on variance or error reduction and uses hyperparameters, pruning, and cross-validation to control overfitting and improve generalization.
