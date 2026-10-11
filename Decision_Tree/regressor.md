@@ -24,10 +24,11 @@ V(R)=\frac{1}{n}\sum_{i=1}^{n}(y_i-\bar{y})^2
 $$
 
 Where:
-
+$$
 - (n) = number of observations
 - (y_i) = actual target value
 - (\bar{y}) = mean of target values
+$$
 
 Mean Squared Error (MSE) measures the average squared difference between actual and predicted values.
 
@@ -36,9 +37,10 @@ MSE=\frac{1}{n}\sum_{i=1}^{n}(y_i-\hat{y}_i)^2
 $$
 
 Where:
-
+$$
 - (y_i) = actual value
 - (\hat{y}_i) = predicted value
+$$
 
 At a leaf node, the prediction is usually the mean of the target values in that leaf.
 
@@ -55,11 +57,12 @@ VR=V(R)-\sum_{i=1}^{k}w_iV(C_i)
 $$
 
 Where:
-
+$$
 - (V(R)) = variance of the parent node
 - (V(C_i)) = variance of child node (i)
 - (k) = number of child nodes
 - (w_i) = proportion of observations in child node (i)
+$$
 
 The weight of each child is calculated as:
 
@@ -150,12 +153,12 @@ R^2=1-\frac{\sum_{i=1}^{n}(y_i-\hat{y}i)^2}{\sum{i=1}^{n}(y_i-\bar{y})^2}
 $$
 
 Where:
-
+$$
 - (y_i) = actual value
 - (\hat{y}_i) = predicted value
 - (\bar{y}) = mean of actual target values
 - (n) = number of observations
-
+$$
 Interpretation:
 
 - Lower MAE, MSE, and RMSE generally indicate better predictions.
