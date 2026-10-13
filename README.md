@@ -1,2 +1,2 @@
-# ML_Algos
+# ML Algos:
 implementation of basic ml algorithms
